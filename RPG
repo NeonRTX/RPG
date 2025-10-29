@@ -1,0 +1,141 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+
+namespace Prototipo_1
+{
+    public class Program
+    {
+        
+        public static void Main(string[] args)
+        {
+            Goblin goblinDeBatalha = new Goblin();
+            Guerreiro guerreiroDeBatalha = new Guerreiro();
+
+            Console.WriteLine("Você encontrou um goblin no caminho...");
+            while (true)
+            {
+                int acontecimento = 1;//Random.Shared.Next(1, 4);
+                    if (acontecimento == 1)
+                {
+                    atacarGoblin(guerreiroDeBatalha);
+                }
+                menu(goblinDeBatalha, guerreiroDeBatalha);
+                string opcao = Console.ReadLine();                
+                switch (opcao)
+                {
+                    case "1":
+                        Console.Clear();
+                        atacarGuerreiro(goblinDeBatalha);                        
+                        break;
+
+                    case "2":
+                        Console.WriteLine("2");
+                        break;
+
+
+                    case "3":
+                        Console.WriteLine("3");
+                        break;
+
+
+
+                }
+
+            }
+
+
+        }
+
+
+        public static void menu(Goblin inimigo, Guerreiro aliado)
+        {
+
+            Console.WriteLine("Goblin Comum");
+            Console.WriteLine($"vida: {inimigo.vida}");
+           //Console.WriteLine($"Estamina: {inimigo.estamina}");
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+            Console.WriteLine("GUERREIRO");
+            Console.WriteLine($"vida: {aliado.vida}");
+            Console.WriteLine("Escolha o que quer fazer neste turno");
+            Console.WriteLine("1 - Atacar");
+            Console.WriteLine("2 - Defender");
+            Console.WriteLine("3 - Usar Especial");
+        }
+
+        public static void atacarGuerreiro(Goblin inimigo)
+        {
+            int dadoAcertoGuerreiro = Random.Shared.Next(1, 21);
+            if (dadoAcertoGuerreiro == 20)
+            {
+                int dadoDanoGuerreiro = Random.Shared.Next(1, 5) + Random.Shared.Next(1, 5) + 4;
+                inimigo.vida = inimigo.vida - dadoDanoGuerreiro;
+                Console.WriteLine("VOCÊ CRITOU!!!");
+                Console.WriteLine($"Dano Total: {dadoDanoGuerreiro}");
+
+            } else if (dadoAcertoGuerreiro > 10)
+            {
+                int dadoDanoGuerreiro = Random.Shared.Next(1, 5) + 2;
+                inimigo.vida = inimigo.vida - dadoDanoGuerreiro;
+                Console.WriteLine("Você acertou o ataque!");
+                Console.WriteLine($"Dano Total: {dadoDanoGuerreiro}");
+
+            } else
+                Console.WriteLine("Você errou o ataque!");
+        }
+
+        public static void atacarGoblin(Guerreiro aliado)
+        {
+            int dadoAcertoGoblin = Random.Shared.Next(1, 21);
+            if (dadoAcertoGoblin == 20)
+            {
+                int dadoDanoGoblin = Random.Shared.Next(1, 7) + Random.Shared.Next(1, 7) + 4;
+                aliado.vida = aliado.vida - dadoDanoGoblin;
+                Console.WriteLine("O GOBLIN CRITOU!!!");
+                Console.WriteLine($"Dano Total: {dadoDanoGoblin}");
+
+            }
+            else if (dadoAcertoGoblin > 10)
+            {
+                int dadoDanoGoblin = Random.Shared.Next(1, 7) + 2;
+                aliado.vida = aliado.vida - dadoDanoGoblin;
+                Console.WriteLine("O Goblin acertou o ataque!");
+                Console.WriteLine($"Dano Total: {dadoDanoGoblin}");
+
+            }
+            else
+                Console.WriteLine("O Goblin errou o ataque!");
+        }
+
+
+
+        public  class Goblin
+        {
+            public int vida = 12;
+            //public int estamina = 6;
+
+            public void imprimirEstatusGoblin()
+            {
+                Console.WriteLine($"VIDA: {vida}");
+                //Console.WriteLine($"ESTAMINA: {estamina}");
+            }
+        }
+
+        public class Guerreiro
+        {
+            public int vida = 15;
+            //public int estamina = 10;
+
+            public void imprimirEstatusGuerreiro()
+            {
+                Console.WriteLine($"VIDA: {vida}");
+                //Console.WriteLine($"ESTAMINA: {estamina}");
+            }
+
+
+        }
+    }
+}
