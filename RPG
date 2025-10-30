@@ -8,45 +8,54 @@ namespace Prototipo_1
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
+            
+
             Goblin goblinDeBatalha = new Goblin();
+            goblinDeBatalha.SetarStatus();
+            
             Guerreiro guerreiroDeBatalha = new Guerreiro();
 
             //Inicio da batalha
             Console.WriteLine("Você encontrou um goblin no caminho...");
-
+           
             while (true)//Looping infinito para o vencedor da batalha
             {
-                if (goblinDeBatalha.vida <= 0)
+                if (goblinDeBatalha.Vida <= 0)
                 {
-
-                    Console.WriteLine($"Vida Goblin: {goblinDeBatalha.vida}");
-                    Console.WriteLine($"Sua Vida: {guerreiroDeBatalha.vida}");
+                    
+                    Console.WriteLine($"Vida Goblin: {goblinDeBatalha.Vida}");
+                    Console.WriteLine($"Sua Vida: {guerreiroDeBatalha.Vida}");
                     Console.WriteLine("VOCÊ GANHOU!!!");
                     Console.ReadLine();
-                    break;
-                }
-                else if (guerreiroDeBatalha.vida <= 0)
+                    break;                    
+                } else if (guerreiroDeBatalha.Vida <= 0)
                 {
-
-                    Console.WriteLine($"Vida Goblin: {goblinDeBatalha.vida}");
-                    Console.WriteLine($"Sua Vida: {guerreiroDeBatalha.vida}");
+                    
+                    Console.WriteLine($"Vida Goblin: {goblinDeBatalha.Vida}");
+                    Console.WriteLine($"Sua Vida: {guerreiroDeBatalha.Vida}");
                     Console.WriteLine("VOCÊ PERDEU!!!");
                     Console.ReadLine();
                     break;
-                }
-                else
-                    menu(goblinDeBatalha, guerreiroDeBatalha);
-
+                } else
+                menu(goblinDeBatalha, guerreiroDeBatalha);
+                                
+                               
                 string opcao = Console.ReadLine();
-                
+
+                //if (opcao == "2" && guerreiroDeBatalha.vida == 15) 
+                   // {
+                    //Console.WriteLine("Vida cheia, escolha outra ação...");
+                    //opcao = Console.ReadLine();
+                    //} else { 
                 switch (opcao)
                 {
                     case "1":
                         Console.Clear();
                         Console.WriteLine("");
-                        escolhaGoblin(guerreiroDeBatalha, goblinDeBatalha);
+                        escolhaGoblin( guerreiroDeBatalha, goblinDeBatalha);                        
                         atacarGuerreiro(goblinDeBatalha);
                         Console.WriteLine("");
                         break;
@@ -54,7 +63,7 @@ namespace Prototipo_1
                     case "2":
                         Console.Clear();
                         Console.WriteLine("");
-                        escolhaGoblin(guerreiroDeBatalha, goblinDeBatalha);
+                        escolhaGoblin(guerreiroDeBatalha, goblinDeBatalha);                        
                         curarGuerreiro(guerreiroDeBatalha);
                         Console.WriteLine("");
                         break;
@@ -63,45 +72,43 @@ namespace Prototipo_1
                     case "3":
                         Console.Clear();
                         Console.WriteLine("");
-                        escolhaGoblin(guerreiroDeBatalha, goblinDeBatalha);
+                        escolhaGoblin(guerreiroDeBatalha, goblinDeBatalha);                        
                         usarEspecialGuerreiro(goblinDeBatalha, guerreiroDeBatalha);
                         Console.WriteLine("");
                         break;
-                }             
+
+
+                }
+                //}
+
             }
-        }
-        //Método para looping de MENU
-        public static void loparMenu()
-        {
 
-        }
-
+                       
+        }       
         //Método para a escolha do GOBLIN
         public static void escolhaGoblin(Guerreiro guerreiroDeBatalha, Goblin goblinDeBatalha)
         {
             bool escolha = true;
-            while (escolha == true)
+            while (escolha == true) 
+                { 
+            int acontecimento = dado.Next(1, 4);
+            if (acontecimento == 1)
             {
-                int acontecimento = dado.Next(1, 4);
-                if (acontecimento == 1)
-                {
-                    atacarGoblin(guerreiroDeBatalha);
+                atacarGoblin(guerreiroDeBatalha);
                     escolha = false;
-                }
-                else if (acontecimento == 2 && goblinDeBatalha.vida < 12)
-                {
-                    curarGoblin(goblinDeBatalha);
-                    escolha = false;
-
-                }
-                else if (acontecimento == 3 && goblinDeBatalha.estamina > 0)
-                {
-                    usarEspecialGoblin(guerreiroDeBatalha, goblinDeBatalha);
-                    escolha = false;
-                }
             }
+            else if (acontecimento == 2  && goblinDeBatalha.Vida < 12)
+            {
+                curarGoblin(goblinDeBatalha);
+            }
+            else if (acontecimento == 3 && goblinDeBatalha.Stamina > 0)
+            {
+                usarEspecialGoblin(guerreiroDeBatalha, goblinDeBatalha);
+                    escolha = false;
+                }
+                }
         }
-
+        
         //Método para a exibição do MENU
         public static void menu(Goblin inimigo, Guerreiro aliado)
         {
@@ -109,13 +116,13 @@ namespace Prototipo_1
             Console.WriteLine(" ");
             Console.WriteLine(" ");
             Console.WriteLine("Goblin Comum");
-            Console.WriteLine($"vida: {inimigo.vida}");
-            Console.WriteLine($"Estamina: {inimigo.estamina}");
+            Console.WriteLine($"vida: {inimigo.Vida}");
+            Console.WriteLine($"Estamina: {inimigo.Stamina}");
             Console.WriteLine(" ");
             Console.WriteLine(" ");
             Console.WriteLine("GUERREIRO");
-            Console.WriteLine($"vida: {aliado.vida}");
-            Console.WriteLine($"Estamina: {aliado.estamina}");
+            Console.WriteLine($"vida: {aliado.Vida}");
+            Console.WriteLine($"Estamina: {aliado.Stamina}");
             Console.WriteLine(" ");
             Console.WriteLine(" ");
             Console.WriteLine("Escolha o que quer fazer neste turno");
@@ -125,13 +132,14 @@ namespace Prototipo_1
         }
 
         //Método para o GUERREIRO - ATACAR
-        public static void atacarGuerreiro(Goblin inimigo)
+        public static void atacarGuerreiro(Goblin goblin)
         {
             int dadoAcertoGuerreiro = dado.Next(1, 21);
             if (dadoAcertoGuerreiro == 20)
             {
                 int dadoDanoGuerreiro = dado.Next(1, 5) + dado.Next(1, 5);
-                inimigo.vida = inimigo.vida - dadoDanoGuerreiro;
+                
+                goblin.Vida = inimigo.Vida - dadoDanoGuerreiro;
                 Console.WriteLine(" ");
                 Console.WriteLine("VOCÊ CRITOU!!!");
                 Console.WriteLine($"Dano Total: {dadoDanoGuerreiro}");
@@ -153,78 +161,69 @@ namespace Prototipo_1
         //Método para o GUERREIRO - CURAR
         public static void curarGuerreiro(Guerreiro aliado)
         {
-            if (aliado.vida < 15)
-            {
-                int curaGuerreiro = dado.Next(1, 11) + 2;
-                aliado.vida = aliado.vida + curaGuerreiro;
+            if (aliado.vida < 15) { 
+            int curaGuerreiro = dado.Next(1,11) + 2;
+            aliado.vida = aliado.vida + curaGuerreiro;
                 if (aliado.vida >= 15)
                 {
                     aliado.vida = 15;
-                }
-                else
-
-                    Console.WriteLine($"Você curou: {curaGuerreiro}");
-                Console.WriteLine($"Vida Atual: {aliado.vida}");
-            }
-            else if (aliado.vida == 15)
+                } else
+            
+            Console.WriteLine($"Você curou: {curaGuerreiro}");
+            Console.WriteLine($"Vida Atual: {aliado.vida}");
+            } else if (aliado.vida == 15)
             {
-                Console.WriteLine("Vida cheia!");
+                Console.WriteLine("Vida cheia!");               
             }
 
         }
 
         //Método para o GOBLIN - CURAR
-        public static void curarGoblin(Goblin inimigo)
+        public static void curarGoblin(Goblin goblin)
         {
-            //if (inimigo.vida < 12)
-            //{
-                int curaGoblin = dado.Next(1, 11) + 2;
-                inimigo.vida = inimigo.vida + curaGoblin;
-                if (inimigo.vida >= 12)
+            if (goblin.Vida < 12) 
+            { 
+            int curaGoblin = dado.Next(1, 11) + 2;
+                goblin.Vida = goblin.Vida + curaGoblin;
+                if(goblin.Vida >= 12)
                 {
-                    inimigo.vida = 12;
-                }
-                else
-                    Console.WriteLine($"O Goblin curou: {curaGoblin}");
-                Console.WriteLine($"Vida Atual do Goblin: {inimigo.vida}");
-            //}
-           // else if (inimigo.vida == 12)
-            //{
-                //Console.WriteLine("Vida do Goblin cheia!");
-            //}
+                    goblin.Vida = 12;
+                } else
+            Console.WriteLine($"O Goblin curou: {curaGoblin}");
+            Console.WriteLine($"Vida Atual do Goblin: {inimigo.Vida}");
+            } else if (inimigo.Vida == 12)
+            {
+                Console.WriteLine("Vida do Goblin cheia!");
+            }
         }
 
         //Método para o GUERRREIRO - USAR O ESPECIAL
         public static void usarEspecialGuerreiro(Goblin inimigo, Guerreiro aliado)
         {
-
-            int acertoEspecialGuerreiro = dado.Next(1, 21);
+            
+            int acertoEspecialGuerreiro = dado.Next(1,21);
             Console.WriteLine("Você usou ATAQUE PESADO...");
 
-            if (aliado.estamina <= 3 && aliado.estamina > 0)
-            {
+            if (aliado.estamina <= 3 && aliado.estamina > 0) {
                 aliado.estamina = aliado.estamina - 1;
                 if (acertoEspecialGuerreiro == 20)
-                {
-                    int danoEspecialGuerreiro = 2 * (dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5));
-                    inimigo.vida = inimigo.vida - danoEspecialGuerreiro;
-                    Console.WriteLine("VOCÊ CRITOU NO ESPECIAL!!!");
-                    Console.WriteLine($"Dano Total: {danoEspecialGuerreiro}");
+            {
+                int danoEspecialGuerreiro = 2 * (dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5));
+                inimigo.vida = inimigo.vida - danoEspecialGuerreiro;
+                Console.WriteLine("VOCÊ CRITOU NO ESPECIAL!!!");
+                Console.WriteLine($"Dano Total: {danoEspecialGuerreiro}");
 
-                }
-                else if (acertoEspecialGuerreiro > 10)
-                {
-                    int danoEspecialGuerreiro = dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5);
-                    inimigo.vida = inimigo.vida - danoEspecialGuerreiro;
-                    Console.WriteLine("Você acertou o especial...");
-                    Console.WriteLine($"Dano Total: {danoEspecialGuerreiro}");
+            } else if (acertoEspecialGuerreiro > 10) 
+                { 
+                int danoEspecialGuerreiro = dado.Next(1,5) + dado.Next(1, 5) + dado.Next(1, 5) + dado.Next(1, 5);
+                inimigo.vida = inimigo.vida - danoEspecialGuerreiro;
+                Console.WriteLine("Você acertou o especial...");
+                Console.WriteLine($"Dano Total: {danoEspecialGuerreiro}");
 
-                }
-                else
-                    Console.WriteLine("Você errou o especial...");
+            } else 
+                Console.WriteLine("Você errou o especial...");
 
-            }
-            else
+            } else
                 Console.WriteLine("Você não tem mais estamina...");
         }
 
@@ -238,29 +237,28 @@ namespace Prototipo_1
             {
                 inimigo.estamina = inimigo.estamina - 1;
                 if (acertoEspecialGoblin == 20)
-                {
-                    int danoEspecialGoblin = 2 * (dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7));
-                    aliado.vida = aliado.vida - danoEspecialGoblin;
-                    Console.WriteLine("O GOBLIN CRITOU NO ESPECIAL!!!");
-                    Console.WriteLine($"Dano Total: {danoEspecialGoblin}");
+            {
+                int danoEspecialGoblin = 2 * (dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7));
+                aliado.vida = aliado.vida - danoEspecialGoblin;
+                Console.WriteLine("O GOBLIN CRITOU NO ESPECIAL!!!");
+                Console.WriteLine($"Dano Total: {danoEspecialGoblin}");
 
-                }
-                else if (acertoEspecialGoblin > 10)
-                {
-                    int danoEspecialGoblin = dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7);
-                    aliado.vida = aliado.vida - danoEspecialGoblin;
-                    Console.WriteLine("O Goblin acerto o especial.");
-                    Console.WriteLine($"Dano Total: {danoEspecialGoblin}");
-                }
-                else
-                    Console.WriteLine("O goblin errou o especial...");
+            }
+            else if (acertoEspecialGoblin > 10)
+            {
+                int danoEspecialGoblin = dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7) + dado.Next(1, 7);
+                aliado.vida = aliado.vida - danoEspecialGoblin;
+                Console.WriteLine("O Goblin acerto o especial.");
+                Console.WriteLine($"Dano Total: {danoEspecialGoblin}");
             }
             else
+                Console.WriteLine("O goblin errou o especial...");
+            } else
             {
                 Console.WriteLine("O Goblin não tem mais estamina...");
             }
         }
-
+        
         //Método para o GOBLIN - ATACAR
         public static void atacarGoblin(Guerreiro aliado)
         {
@@ -284,38 +282,99 @@ namespace Prototipo_1
             else
                 Console.WriteLine("O Goblin errou o ataque!");
         }
-
+        
         //Método para ROLAGEM DE DADOS
         private static Random dado = new Random();
+        
 
-        //Classe do Goblin
-        public class Goblin
+        //Classe Abstrata Personagem
+        public abstract class Personagem
         {
-            public int vida = 12;
-            public int estamina = 3;
+            public string Nome { get; protected set; }
+            public int Vida { get; protected set; }
+            public int Stamina { get; protected set; }
 
-            public void imprimirEstatusGoblin()
-            {
-                Console.WriteLine($"VIDA: {vida}");
-                Console.WriteLine($"ESTAMINA: {estamina}");
-            }
-        }
+            public abstract void ImprimirEstatusPersonagem();
+
+            public abstract void SetarStatus();
+        } 
 
         //Classe do Guerreiro
-        public class Guerreiro
+        public class Guerreiro : Personagem
         {
-            public int vida = 15;
-            public int estamina = 3;
-
-            public void imprimirEstatusGuerreiro()
+            public override void SetarStatus()
             {
-                Console.WriteLine($"VIDA: {vida}");
-                Console.WriteLine($"ESTAMINA: {estamina}");
+                Nome = "Guerreiro";
+                Vida = Vida + 1;
+                Stamina = Stamina + 3;
             }
+
+            public override void ImprimirEstatusPersonagem()
+            {
+                Console.WriteLine($"{Nome}");
+                Console.WriteLine($"VIDA: {Vida}");
+                Console.WriteLine($"ESTAMINA: {Stamina}");
+            }
+
+            //public int vida = 15;
+            //public int estamina = 3;
+
+            //public void imprimirEstatusGuerreiro()
+            // {
+            //    Console.WriteLine($"VIDA: {vida}");
+            //    Console.WriteLine($"ESTAMINA: {estamina}");
+            //}
 
 
         }
 
+        //Classe abstrata INIMIGO
+        public abstract class Inimigo {
+            public string Nome { get; protected set; }
+            public int Vida { get; protected set; }
+            public int Stamina { get; protected set; }
 
+            public abstract void ImprimirEstatusInimigo();
+
+            public abstract void SetarStatus();
+
+            //public abstract void SofrerDano();
+        }
+
+        //Classe do Goblin (Recebe herança da CLASSE ABSTRATA INIMIGO)
+        public class Goblin : Inimigo
+        {
+            public override void SetarStatus()
+            {
+                Nome = "Goblin";
+                Vida = Vida + 12;
+                Stamina = Stamina + 3;
+            }
+
+            public override void ImprimirEstatusInimigo()
+            {
+                Console.WriteLine($"{Nome}");
+                Console.WriteLine($"VIDA: {Vida}");
+                Console.WriteLine($"ESTAMINA: {Stamina}");
+            }
+
+            //public override void SofrerDano()
+            //{
+            //    this.Vida = this.Vida - dano;
+            //}
+
+            //public int Vida { get; private set; }
+            //public int estamina = 3;
+
+            //public void ImprimirEstatusGoblin()
+            //{
+            //   Console.WriteLine($"VIDA: {Vida}");
+            //Console.WriteLine($"ESTAMINA: {estamina}");
+            // }
+
+            //public void SofrerDano(int dano) { 
+            //  this.Vida = this.Vida - dano;
+            //}
+        }
     }
 }
